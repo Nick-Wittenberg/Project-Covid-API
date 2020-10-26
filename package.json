@@ -1,0 +1,56 @@
+{
+  "name": "02-project-covid-api",
+  "version": "1.0.0",
+  "description": "Build a COVID-19 tracker API server using daily COVID-19 summary data from the European CDC API.",
+  "main": "src/server.js",
+  "scripts": {
+    "build": "rimraf dist && babel -d dist src",
+    "start": "yarn run build && node dist/server.js",
+    "start:watch": "yarn run build && nodemon --watch src --exec yarn start",
+    "dev": "yarn run start:watch",
+    "load": "yarn run build && LOAD=true node dist/services/summaries.js",
+    "test": "NODE_ENV=test MONGO_PORT=27018 jest src --runInBand --silent"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/cli": "^7.10.5",
+    "@babel/core": "^7.11.1",
+    "@babel/preset-env": "^7.11.0",
+    "@types/jest": "^26.0.10",
+    "jest": "^26.4.0",
+    "mongodb-memory-server": "^6.6.4",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.4",
+    "papaparse": "^5.2.0",
+    "rimraf": "^3.0.2",
+    "supertest": "^4.0.2"
+  },
+  "dependencies": {
+    "argon2": "^0.27.0",
+    "aws-sdk": "^2.692.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.18",
+    "node-fetch": "^2.6.0",
+    "world-countries": "^4.0.0"
+  },
+  "jest": {
+    "verbose": true,
+    "silent": false,
+    "testTimeout": 3000,
+    "testEnvironment": "node",
+    "setupFilesAfterEnv": [
+      "<rootDir>/test-db-setup.js"
+    ],
+    "testPathIgnorePatterns": [
+      "data/",
+      "dist/",
+      "images/",
+      "solution/"
+    ]
+  }
+}
