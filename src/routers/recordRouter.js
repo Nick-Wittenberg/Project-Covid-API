@@ -8,6 +8,14 @@ const recordRouter = (CountrySummaryModel, RecordModel) => {
    */
   router.get("/summaries", async (req, res) => {
     /** TODO */
+    try {
+      const summaries = await CountrySummaryModel.find({});
+      console.log(summaries);
+      res.json({ summaries });
+    } catch (e) {
+      console.log(e);
+      return res.status(500).send(e);
+    }
   });
 
   /**
