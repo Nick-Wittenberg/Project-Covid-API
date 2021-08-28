@@ -7,7 +7,6 @@ const recordRouter = (CountrySummaryModel, RecordModel) => {
    * GET all country summaries
    */
   router.get("/summaries", async (req, res) => {
-    /** TODO */
     try {
       const summaries = await CountrySummaryModel.find({});
       console.log(summaries);
@@ -26,7 +25,16 @@ const recordRouter = (CountrySummaryModel, RecordModel) => {
    * latitude (lat), longitude (lng).
    */
   router.get("/summaries/:geoId", async (req, res) => {
-    /** TODO */
+    try {
+      const summary = await CountrySummaryModel.findOne({
+        geoId: req.params.geoId,
+      });
+      console.log(summary);
+      res.json(summary);
+    } catch (e) {
+      console.log(e);
+      res.status(500).send(e);
+    }
   });
 
   /**
