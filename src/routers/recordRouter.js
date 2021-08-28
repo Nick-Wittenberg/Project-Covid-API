@@ -41,14 +41,28 @@ const recordRouter = (CountrySummaryModel, RecordModel) => {
    * GET all the records (global)
    */
   router.get("/", async (req, res) => {
-    /** TODO */
+    try {
+      const records = await RecordModel.find({});
+      console.log(records);
+      res.json({ records });
+    } catch (e) {
+      console.log(e);
+      res.status(500).send(e);
+    }
   });
 
   /**
    * GET all the records for a single country
    */
   router.get("/:geoId", async (req, res) => {
-    /** TODO */
+    try {
+      const record = await RecordModel.find({ geoId: req.params.geoId }).exec();
+      console.log(record);
+      res.json(record);
+    } catch (e) {
+      console.log(e);
+      res.status(500).send(e);
+    }
   });
 
   return router;
