@@ -9,8 +9,12 @@ const profileRouter = (UserModel, requireAuth, publicKey) => {
     "/:userId",
     requireAuth(UserModel, publicKey),
     async (req, res) => {
-      console.log(req.verifiedUser);
+      // Verify req.params is the same as req.verifiedUser
       console.log(req.jwtPayload);
+      if (!(req.jwtPayload.sub === req.params.userId)) {
+        return res.status(400).json({ error: "Incorrect URL" });
+      }
+
       res.send("success");
       /** TODO */
     }

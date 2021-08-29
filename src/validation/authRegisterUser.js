@@ -23,6 +23,7 @@ const schema = Joi.object({
     })
     .required()
     .error(new Error("Invalid email - email must be a valid email.")),
+  emailOptIn: Joi.boolean(),
 });
 
 export default schema;

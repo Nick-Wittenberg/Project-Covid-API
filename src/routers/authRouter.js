@@ -90,6 +90,7 @@ const authRouter = (UserModel, privateKey) => {
       if (!checkUser) {
         return res.status(404).json({ error: "User not found" });
       }
+      console.log(checkUser);
 
       // check password matches
       if (!(await argon2.verify(checkUser.password, password))) {
@@ -104,7 +105,7 @@ const authRouter = (UserModel, privateKey) => {
       const payload = {
         sub: username,
         iss: "covid-api-server",
-        optIn: emailOptIn,
+        optIn: checkUser.emailOptIn,
       };
 
       const jwtToken = jwt.sign(payload, privateKey, opts);

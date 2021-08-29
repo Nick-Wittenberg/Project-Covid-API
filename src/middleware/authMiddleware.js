@@ -7,14 +7,14 @@ const authMiddleware = (UserModel, publicKey) => {
       const { authorization } = req.headers;
       if (!authorization) {
         return res
-          .status(400)
+          .status(401)
           .json({ error: "Authorization header required." });
       }
 
       // 2. check Bearer string format
       if (!authorization.startsWith("Bearer ")) {
         return res
-          .status(400)
+          .status(401)
           .json({ error: "Invallid authorization bearer string." });
       }
       // 3. grab the token
@@ -23,7 +23,16 @@ const authMiddleware = (UserModel, publicKey) => {
       // 4. verify token
       const payload = jwt.verify(token, publicKey);
 
-      // 5. verify user exists in database
+      // 5. verify iat has not expried
+
+      // verify payload in miliseconds plus 30 days is greater than the current date
+      // could make this into a separate function
+
+      if (!(payload.iat * 1000 + 30 * 86400000 >= new Date().getTime())) {
+        return res.status(401).json({ error: "Authorization token expired." });
+      }
+
+      // 6. verify user exists in database
       const verifiedUser = UserModel.findById(payload.sub);
 
       if (!verifiedUser) {
