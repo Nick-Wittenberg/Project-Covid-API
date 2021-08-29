@@ -112,3 +112,6 @@ dist/
 covid-19-sample.json
 covid-19-transformed.json
 sample-covid-records.js
+
+# cert keys
+src/certs/jwtRS256*
