@@ -1,18 +1,10 @@
-import fs from "fs";
-import path from "path";
 import argon2 from "argon2";
 import jwt from "jsonwebtoken";
 import registerSchema from "../validation/authRegisterUser";
 import loginSchema from "../validation/authLoginUser";
 import express from "express";
 
-const privateKeyPath = path.join(__dirname, "../certs/jwtRS256.key");
-if (!fs.existsSync(privateKeyPath)) {
-  throw new Error("Could not find RS256 Private Key");
-}
-const privateKey = fs.readFileSync(privateKeyPath);
-
-const authRouter = (UserModel) => {
+const authRouter = (UserModel, privateKey) => {
   const router = express.Router();
 
   /**
