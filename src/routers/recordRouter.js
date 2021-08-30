@@ -9,8 +9,8 @@ const recordRouter = (CountrySummaryModel, RecordModel) => {
   router.get("/summaries", async (req, res) => {
     try {
       const summaries = await CountrySummaryModel.find({});
-      console.log(summaries);
-      res.json({ summaries });
+
+      res.json(summaries);
     } catch (e) {
       console.log(e);
       return res.status(500).send(e);
@@ -29,7 +29,7 @@ const recordRouter = (CountrySummaryModel, RecordModel) => {
       const summary = await CountrySummaryModel.findOne({
         geoId: req.params.geoId,
       });
-      console.log(summary);
+
       res.json(summary);
     } catch (e) {
       console.log(e);
@@ -44,7 +44,7 @@ const recordRouter = (CountrySummaryModel, RecordModel) => {
     try {
       const records = await RecordModel.find({});
       console.log(records);
-      res.json({ records });
+      res.json(records);
     } catch (e) {
       console.log(e);
       res.status(500).send(e);
